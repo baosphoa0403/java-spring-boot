@@ -4,7 +4,9 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -25,9 +27,6 @@ public class StudentEntity {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "roleID")
-    private String roleID;
-
     @Override
     public String toString() {
         return "Student{" +
@@ -41,11 +40,14 @@ public class StudentEntity {
 
     @ManyToMany
     @JoinTable(name = "role_student",
-            joinColumns = @JoinColumn(name = "role"),
-            inverseJoinColumns = @JoinColumn(name = "id")
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    private List<RoleEntity> roles = new ArrayList<>();
-//    @ManyToOne
-//    @JoinColumn(name = "roleid")
-//    private RoleDTO role;
+    private Set<RoleEntity> roles = new HashSet<>();
+
+
+    @ManyToOne
+    @JoinColumn(name = "statusid")
+    private StatusEntity status;
+
 }
